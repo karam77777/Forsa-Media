@@ -69,7 +69,7 @@ const portfolioData = [
     en: { cat: 'Social Media', title: 'Carrefour Social Media Management' }
   },
   {
-    category: 'social',
+    category: 'videos',
     bg: '📐',
     gradient: 'linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.05))',
     ar: { cat: 'مونتاج ريلز', title: 'أعمال المونتاج والريلز' },

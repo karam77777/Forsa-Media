@@ -530,6 +530,182 @@ header.scrolled {
   }
 }
 
+/* Hero Audio Widget */
+.hero-audio-widget {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin-bottom: 28px;
+  max-width: 580px;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  text-align: right;
+}
+
+[dir="ltr"] .hero-audio-widget {
+  text-align: left;
+}
+
+.audio-widget-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-bottom: 8px;
+  width: 100%;
+  gap: 8px;
+}
+
+.audio-widget-label {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+[dir="ltr"] .audio-widget-label {
+  font-family: 'Outfit', sans-serif;
+}
+
+.audio-pointing-arrow {
+  width: 46px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  animation: arrow-bounce 0.8s ease-in-out infinite alternate;
+  flex-shrink: 0;
+}
+
+@keyframes arrow-bounce {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-4px);
+  }
+}
+
+.audio-controls-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.audio-play-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--green-neon), var(--green-700));
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  box-shadow: 0 4px 15px rgba(31, 191, 74, 0.3);
+  flex-shrink: 0;
+}
+
+.audio-play-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(31, 191, 74, 0.4);
+}
+
+.audio-play-btn svg {
+  transition: transform 0.2s var(--ease);
+}
+
+.audio-play-btn:active {
+  transform: scale(0.95);
+}
+
+.audio-waves {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2px;
+  height: 46px;
+  padding: 0 16px;
+  flex-grow: 1;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 24px;
+}
+
+[data-theme="dark"] .audio-waves {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.wave-bar {
+  display: inline-block;
+  width: 3px;
+  height: var(--h, 16px);
+  background-color: rgba(0, 0, 0, 0.15); /* Fills up nicely in light theme */
+  border-radius: 2px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  transform-origin: center;
+}
+
+[data-theme="dark"] .wave-bar {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.wave-bar.active {
+  background-color: var(--green-500);
+}
+
+[data-theme="dark"] .wave-bar.active {
+  background-color: var(--green-neon);
+}
+
+.audio-waves.playing .wave-bar.active {
+  animation: wave-pulse 1.2s ease-in-out infinite alternate;
+  animation-delay: calc(var(--i, 0) * 0.05s);
+}
+
+@keyframes wave-pulse {
+  0% {
+    transform: scaleY(0.9);
+  }
+  100% {
+    transform: scaleY(1.1);
+  }
+}
+
+.audio-portfolio-btn {
+  margin-right: auto;
+  white-space: nowrap;
+}
+
+[dir="ltr"] .audio-portfolio-btn {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+@media (max-width: 980px) {
+  .hero-audio-widget {
+    margin: 0 auto 32px auto;
+    text-align: center;
+    max-width: 480px;
+  }
+  .audio-widget-label {
+    justify-content: center;
+  }
+  .audio-controls-row {
+    justify-content: center;
+  }
+}
+
 .hero-text .eyebrow {
   justify-content: center;
 }
@@ -701,43 +877,43 @@ header.scrolled {
 
 .hero-chip.c1 {
   top: 5%;
-  right: -8%;
+  right: -2%;
   animation-delay: 0s;
 }
 
 .hero-chip.c5 {
   top: 12%;
-  left: -8%;
+  left: -2%;
   animation-delay: 0.4s;
 }
 
 .hero-chip.c4 {
   top: 30%;
-  right: -12%;
+  right: -4%;
   animation-delay: 0.8s;
 }
 
 .hero-chip.c3 {
   top: 45%;
-  left: -12%;
+  left: -4%;
   animation-delay: 1.2s;
 }
 
 .hero-chip.c6 {
   top: 55%;
-  right: -12%;
+  right: -4%;
   animation-delay: 1.6s;
 }
 
 .hero-chip.c2 {
   bottom: 8%;
-  left: -4%;
+  left: 0%;
   animation-delay: 2.0s;
 }
 
 .hero-chip.c7 {
   bottom: 5%;
-  right: -4%;
+  right: 0%;
   animation-delay: 2.4s;
 }
 

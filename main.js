@@ -16,6 +16,8 @@ const translations = {
     "btn-consult": "ابعتلنا استفسارك",
 
     // Hero Section
+    "audio-widget-label": "لو معندكش وقت تسكرول في الموقع اعرف احنا بنقدم اية من هنا",
+    "audio-portfolio-btn": "أعمالنا",
     "hero-badge": "فرصة ميديا",
     "hero-title-1": "نحو",
     "hero-accent": "فرصة ..",
@@ -281,6 +283,8 @@ const translations = {
     "btn-consult": "Send Us Your Inquiry",
 
     // Hero Section
+    "audio-widget-label": "Don't have time to scroll? Find out what we offer here",
+    "audio-portfolio-btn": "Our Work",
     "hero-badge": "Forsa Media",
     "hero-title-1": "Towards a",
     "hero-accent": "Chance ..",
@@ -1104,6 +1108,66 @@ const translations = {
       form.reset();
     }, 2600);
   });
+
+  // ── Audio Hero Widget Logic ──
+  const heroAudio = document.getElementById('heroAudio');
+  const heroPlayBtn = document.getElementById('heroPlayBtn');
+  const audioWaves = document.getElementById('audioWaves');
+  
+  if (heroAudio && heroPlayBtn && audioWaves) {
+    const playIcon = heroPlayBtn.querySelector('.play-icon');
+    const pauseIcon = heroPlayBtn.querySelector('.pause-icon');
+
+    function updateBtnState() {
+      if (heroAudio.paused) {
+        playIcon.style.display = 'block';
+        pauseIcon.style.display = 'none';
+        audioWaves.classList.remove('playing');
+      } else {
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+        audioWaves.classList.add('playing');
+      }
+    }
+
+    heroPlayBtn.addEventListener('click', () => {
+      if (heroAudio.paused) {
+        document.querySelectorAll('audio, video').forEach(el => {
+          if (el !== heroAudio) el.pause();
+        });
+        heroAudio.play()
+          .then(updateBtnState)
+          .catch(err => console.log('Audio playback prevented:', err));
+      } else {
+        heroAudio.pause();
+        updateBtnState();
+      }
+    });
+
+    const waveBars = audioWaves.querySelectorAll('.wave-bar');
+
+    heroAudio.addEventListener('timeupdate', () => {
+      if (heroAudio.duration) {
+        const pct = heroAudio.currentTime / heroAudio.duration;
+        const activeCount = Math.floor(pct * waveBars.length);
+        waveBars.forEach((bar, idx) => {
+          if (idx <= activeCount && heroAudio.currentTime > 0) {
+            bar.classList.add('active');
+          } else {
+            bar.classList.remove('active');
+          }
+        });
+      }
+    });
+
+    heroAudio.addEventListener('pause', updateBtnState);
+    heroAudio.addEventListener('play', updateBtnState);
+    heroAudio.addEventListener('ended', () => {
+      heroAudio.currentTime = 0;
+      waveBars.forEach(bar => bar.classList.remove('active'));
+      updateBtnState();
+    });
+  }
 
   // Initial translation setup once everything is loaded
   setLanguage(currentLang);

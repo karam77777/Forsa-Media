@@ -26,7 +26,7 @@ const portfolioData = [
   {
     category: 'social',
     bg: '📱',
-    image: 'Portfolio/3- غلاف قسم السوشيال ميديا.jpg', 
+    image: 'Portfolio/1- غلاف قسم السوشيال ميديا.jpg', 
     video: '', 
     media: [
       'Portfolio/Social/0.jpeg',
@@ -75,7 +75,7 @@ const portfolioData = [
   {
     category: 'print',
     bg: '🖨️',
-    image: 'Portfolio/1- غلاف قسم الطباعة.jpg',
+    image: 'Portfolio/3- غلاف قسم الطباعة.jpg',
     video: '',
     media: [
       'Portfolio/Print/1- ايجي كيم 1.jpg',
@@ -106,7 +106,7 @@ const portfolioData = [
   {
     category: 'ads',
     bg: '📈',
-    image: 'Portfolio/6- غلاف قسم الاعلانات.jpg',
+    image: 'Portfolio/4- غلاف قسم الاعلانات.jpg',
     video: '',
     gradient: 'linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(239, 68, 68, 0.05))',
     ar: { cat: 'حملات إعلانية', title: 'نتائج اعلانات مموله' },
@@ -187,7 +187,7 @@ const portfolioData = [
   {
     category: 'videos',
     bg: '📐',
-    image: 'Portfolio/4- غلاف قسم الفيديو ايديتنج.jpg',
+    image: 'Portfolio/6- غلاف قسم الفيديو ايديتنج.jpg',
     video: '',
     gradient: 'linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.05))',
     ar: { cat: 'مونتاج ريلز', title: 'أعمال المونتاج والريلز' },

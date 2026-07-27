@@ -94,10 +94,11 @@ const translations = {
     "pf-title": "أعمال تتحدث بالنيابة عنا",
     "pf-sub": "نماذج من مشاريعنا في التصميم، الطباعة، الهوية البصرية، والحملات الإعلانية.",
     "pf-btn-all": "الكل",
-    "pf-btn-design": "مشاريع هوية بصرية",
+    "pf-btn-design": "تصميم الجرافيك",
     "pf-btn-print": "تصاميم مطبوعة",
     "pf-btn-social": "تصاميم سوشيال ميديا",
     "pf-btn-ads": "حملات إعلانية",
+    "full-zoom-hint": "🔍 انقر على الصورة للتكبير والتمرير (Zoom & Pan)",
     "pf-btn-videos": "فيديوهات وريلز",
 
     // Process
@@ -131,20 +132,48 @@ const translations = {
     "testi-title": "ثقة عملائنا أكبر إنجاز لنا",
     "testi-quote-1": "\"فرصة ميديا غيّروا شكل منصاتي بالكامل. من أول الهوية البصرية لحد مونتاج الريلز والتواصل سريع، ونتائج الاعلانات الاورجانيك كويسة جدا.\"",
     "testi-avatar-1": "ع",
-    "testi-name-1": "عمر عزازي",
+    "testi-name-1": "أ/ عمر عزازي",
     "testi-role-1": "محلل مالي / سوقي",
-    "testi-quote-2": "\"فريق محترف جداً يفهم احتياج العميل من أول جلسة. الهوية البصرية التي صمموها لعيادتنا عكست بالضبط الصورة التي كنا نريدها.\"",
+    "testi-quote-2": "\"تسلم ايديكم هظبط الصفحة وإن شاء الله فيه شغل تاني رسوم متحركة ومونتاج .. تشرفت بيكم وإن شاء الله نكمل مع بعض\"",
     "testi-avatar-2": "م",
-    "testi-name-2": "د. محمد الشريف",
-    "testi-role-2": "مالك عيادة طبية",
-    "testi-quote-3": "\"التزامهم بالمواعيد والجودة العالية في الطباعة جعلنا نتعامل معهم بشكل دائم. خدمة تستحق التقييم الكامل.\"",
-    "testi-avatar-3": "س",
-    "testi-name-3": "سارة احمد",
-    "testi-role-3": "مديرة تسويق، مطعم",
-    "testi-quote-4": "\"فرصة ميديا غيّروا شكل صفحاتنا بالكامل. التصاميم احترافية والتواصل سريع، ونتائج الإعلانات فعلاً لمسنا فرقها على المبيعات.\"",
-    "testi-avatar-4": "ر",
-    "testi-name-4": "ريم محمد",
-    "testi-role-4": "صاحبة مشروع أزياء",
+    "testi-name-2": "أ/ محمد حافظ",
+    "testi-role-2": "محلل بيانات أسواق مالية",
+    "testi-quote-3": "\"تعاملنا مع فرصة ميديا في طباعة وتجهيز مستندات الشركة والمواد الدعائية أكثر من مرة، وبصراحة الالتزام بالمواعيد وجودة الخامات والألوان كانت ممتازة جداً وبتعكس احترافية حقيقية.\"",
+    "testi-avatar-3": "ع",
+    "testi-name-3": "عربية أون لاين (NI Capital)",
+    "testi-role-3": "شركة وساطة مالية",
+    "testi-quote-4": "\"نسأل الله العلي القدير أن يبارك في جهود فريق فرصة ميديا؛ فقد قدموا لنا تصاميم مميزة لمنصاتنا الرقمية، ومونتاجاً متقناً لبودكاست الأكاديمية جمع بين الرقي البصري والوضوح السمعي، فكانوا نعم المعين في مسيرة البناء والنشر.\"",
+    "testi-avatar-4": "و",
+    "testi-name-4": "أكاديمية وحي",
+    "testi-role-4": "منصة تعليمية شرعية",
+    "testi-quote-5": "\"خدمة رائعة وتجاوب سريع من فريق العمل، ساعدونا كتير في إخراج منشورات وحملات الجمعية على السوشيال ميديا بشكل إنساني وجذاب يلمس قلوب المتبرعين والمستفيدين.\"",
+    "testi-avatar-5": "ج",
+    "testi-name-5": "جمعية أمة الحبيب",
+    "testi-role-5": "للمساعدات الاجتماعية",
+    "testi-quote-6": "\"تصميمات السوشيال ميديا اللي عملتوها لشركتنا ساهمت بشكل كبير في توضيح مزايا أنظمتنا الأمنية وعرضها بطريقة احترافية ومقنعة للعملاء، شغل ممتاز وتواصل راقي.\"",
+    "testi-avatar-6": "س",
+    "testi-name-6": "شركة سمارتيفيا (Smartivia)",
+    "testi-role-6": "أجهزة الأمان والكاميرات",
+    "testi-quote-7": "\"شغل المطبوعات مع فريق فرصة ميديا كان تجربة ممتازة، طلبنا مطبوعات بأشكال وخامات متنوعة وكان التنفيذ قمة في الدقة والسرعة مع تنسيق ألوان احترافي.\"",
+    "testi-avatar-7": "ن",
+    "testi-name-7": "أ/ نهاد علي",
+    "testi-role-7": "مديرة منصة البورصجية للحلول المالية",
+    "testi-quote-8": "\"صمموا لنا هوية بصرية متكاملة للشركة ونفذوا لنا كل المطبوعات الرسمية والدعائية كذا مرة، شغلهم مميز ويفهموا السوق وبيضيفوا لمسة احترافية قوية للهوية.\"",
+    "testi-avatar-8": "إ",
+    "testi-name-8": "شركة إيجي كيم (EgyChem)",
+    "testi-role-8": "لتجارة خامات البلاستيك",
+    "testi-quote-9": "\"تواصل سريع وتنفيذ متقن ومطابق للمواصفات اللي طلبناها في مطبوعات الشركة، شكرًا لفريق فرصة ميديا على التزامهم بالدقة والجودة العالية.\"",
+    "testi-avatar-9": "ط",
+    "testi-name-9": "أ/ محمد",
+    "testi-role-9": "مدير شركة طاهر ستيل",
+    "testi-quote-10": "\"التعامل معكم وفر علينا مجهود كبير، من تصميم الباكيدج والمينيو لحد الطباعة النهائية بجودة ممتازة وسرعة تسليم مدهشة، إن شاء الله تعاملنا مستمر.\"",
+    "testi-avatar-10": "ك",
+    "testi-name-10": "أ/ كريم",
+    "testi-role-10": "مدير شركة توريدات عمومية",
+    "testi-quote-11": "\"شكل وتصميم الباكيدج (العلب والأكياس) فرق جداً مع زباين المطعم، جودة الطباعة والألوان كانت مشرفة وجذابة، تسلم إيديكم على هذا المجهود الرائع.\"",
+    "testi-avatar-11": "م",
+    "testi-name-11": "أ/ محمد",
+    "testi-role-11": "مدير مطعم 999",
     "testi-prev": "السابق",
     "testi-next": "التالي",
 
@@ -361,10 +390,11 @@ const translations = {
     "pf-title": "Work that speaks for us",
     "pf-sub": "Samples of our projects in design, printing, brand identity, and ad campaigns.",
     "pf-btn-all": "All",
-    "pf-btn-design": "Brand Identity",
+    "pf-btn-design": "Graphic Design",
     "pf-btn-print": "Printed Designs",
     "pf-btn-social": "Social Media",
     "pf-btn-ads": "Ad Campaigns",
+    "full-zoom-hint": "🔍 Click image to Zoom & Pan",
     "pf-btn-videos": "Videos & Reels",
 
     // Process
@@ -376,20 +406,48 @@ const translations = {
     "testi-title": "Our clients' trust is our greatest achievement",
     "testi-quote-1": "\"Forsa Media completely changed my platforms. From visual identity to Reels editing, fast communication, and organic ads results are very good.\"",
     "testi-avatar-1": "O",
-    "testi-name-1": "Omar Azazy",
+    "testi-name-1": "Mr. Omar Azazy",
     "testi-role-1": "Financial / Market Analyst",
-    "testi-quote-2": "\"A highly professional team that understands client needs from the first meeting. The brand identity they designed for our clinic perfectly reflected the image we wanted.\"",
+    "testi-quote-2": "\"Thank you very much. I will set up the page, and God willing, we have more work coming in animation and editing.. Delighted to work with you, and look forward to continuing together.\"",
     "testi-avatar-2": "M",
-    "testi-name-2": "Dr. Mohamed Al-Sharif",
-    "testi-role-2": "Medical Clinic Owner",
-    "testi-quote-3": "\"Their commitment to deadlines and high print quality keeps us working with them constantly. A service that deserves a full rating.\"",
-    "testi-avatar-3": "S",
-    "testi-name-3": "Sarah Ahmed",
-    "testi-role-3": "Marketing Manager, Restaurant",
-    "testi-quote-4": "\"Forsa Media completely changed our pages. The designs are professional, communication is fast, and we really felt the impact of the ads on sales.\"",
-    "testi-avatar-4": "R",
-    "testi-name-4": "Reem Mohamed",
-    "testi-role-4": "Fashion Project Owner",
+    "testi-name-2": "Mr. Mohamed Hafez",
+    "testi-role-2": "Financial Markets Data Analyst",
+    "testi-quote-3": "\"We worked with Forsa Media on printing and preparing company documents and promotional materials multiple times. Honestly, the commitment to deadlines, material quality, and colors was excellent and reflected true professionalism.\"",
+    "testi-avatar-3": "A",
+    "testi-name-3": "Arabia Online (NI Capital)",
+    "testi-role-3": "Financial Brokerage Company",
+    "testi-quote-4": "\"We pray to Allah to bless the efforts of Forsa Media. They provided outstanding designs for our digital platforms and a masterful editing of the academy podcast, combining visual sophistication and auditory clarity.\"",
+    "testi-avatar-4": "W",
+    "testi-name-4": "Wahy Academy",
+    "testi-role-4": "Islamic Educational Platform",
+    "testi-quote-5": "\"Great service and fast response from the team. They helped us a lot in producing charity posts and social media campaigns in a humane and engaging way that touches the hearts of donors and beneficiaries.\"",
+    "testi-avatar-5": "U",
+    "testi-name-5": "Ummat Al-Habeeb Charity",
+    "testi-role-5": "Social Aid Association",
+    "testi-quote-6": "\"The social media designs you made for our company contributed significantly to clarifying the features of our security systems and presenting them in a professional and convincing way to clients. Excellent work and refined communication.\"",
+    "testi-avatar-6": "S",
+    "testi-name-6": "Smartivia Company",
+    "testi-role-6": "Security Systems & Cameras",
+    "testi-quote-7": "\"Working on print materials with the Forsa Media team was an excellent experience. We requested prints in various shapes and materials, and the execution was highly accurate and fast with professional color matching.\"",
+    "testi-avatar-7": "N",
+    "testi-name-7": "Ms. Nihad Ali",
+    "testi-role-7": "Manager of Al-Borsageya for Financial Solutions",
+    "testi-quote-8": "\"They designed a comprehensive brand identity for our company and executed all official and promotional print materials multiple times. Their work is outstanding; they understand the market and add a strong professional touch to the identity.\"",
+    "testi-avatar-8": "E",
+    "testi-name-8": "EgyChem Company",
+    "testi-role-8": "Plastic Raw Materials Trading",
+    "testi-quote-9": "\"Fast communication, perfect execution, and fully matching the specifications we requested for our company print materials. Thank you to the Forsa Media team for their commitment to accuracy and high quality.\"",
+    "testi-avatar-9": "T",
+    "testi-name-9": "Mr. Mohamed",
+    "testi-role-9": "Manager of Taher Steel Company",
+    "testi-quote-10": "\"Dealing with you saved us a lot of effort, from packaging and menu design to final printing with excellent quality and amazing delivery speed. God willing, our collaboration will continue.\"",
+    "testi-avatar-10": "K",
+    "testi-name-10": "Mr. Karim",
+    "testi-role-10": "Manager of General Supplies Company",
+    "testi-quote-11": "\"The shape and design of the packaging (boxes and bags) made a huge difference with our restaurant customers. The printing quality and colors were honorable and attractive. Thank you very much for this wonderful effort.\"",
+    "testi-avatar-11": "M",
+    "testi-name-11": "Mr. Mohamed",
+    "testi-role-11": "Manager of 999 Restaurant",
     "testi-prev": "Previous",
     "testi-next": "Next",
 
@@ -725,6 +783,7 @@ const translations = {
   if (lightboxClose && lightbox) {
     lightboxClose.addEventListener('click', () => {
       lightbox.classList.remove('active');
+      mediaContainer.classList.remove('has-carousel');
       mediaContainer.innerHTML = '';
     });
 
@@ -732,6 +791,7 @@ const translations = {
     lightbox.addEventListener('click', (e) => {
       if (e.target === lightbox) {
         lightbox.classList.remove('active');
+        mediaContainer.classList.remove('has-carousel');
         mediaContainer.innerHTML = '';
       }
     });
@@ -740,21 +800,76 @@ const translations = {
   let activeMedia = [];
   let currentSlide = 0;
 
+  function safeMediaSrc(path) {
+    if (!path) return '';
+    return path.replace(/\?/g, '%3F').replace(/#/g, '%23').replace(/'/g, '%27');
+  }
+
+  function initLightboxZoom(imgEl) {
+    if (!imgEl) return;
+    if (imgEl._zoomInitialized) return;
+    imgEl._zoomInitialized = true;
+    imgEl._isZoomed = false;
+
+    imgEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      imgEl._isZoomed = !imgEl._isZoomed;
+      if (imgEl._isZoomed) {
+        imgEl.classList.add('zoomed');
+        imgEl.style.transform = 'scale(2.5)';
+        updateZoomOrigin(e, imgEl);
+      } else {
+        resetZoom(imgEl);
+      }
+    });
+
+    imgEl.addEventListener('mousemove', (e) => {
+      if (imgEl._isZoomed) {
+        updateZoomOrigin(e, imgEl);
+      }
+    });
+
+    imgEl.addEventListener('touchmove', (e) => {
+      if (imgEl._isZoomed && e.touches.length > 0) {
+        updateZoomOrigin(e.touches[0], imgEl);
+      }
+    }, { passive: true });
+  }
+
+  function updateZoomOrigin(event, imgEl) {
+    const rect = imgEl.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+    const safeX = Math.max(0, Math.min(100, x));
+    const safeY = Math.max(0, Math.min(100, y));
+    imgEl.style.transformOrigin = `${safeX}% ${safeY}%`;
+  }
+
+  function resetZoom(imgEl) {
+    if (imgEl) {
+      imgEl._isZoomed = false;
+      imgEl.classList.remove('zoomed');
+      imgEl.style.transform = 'scale(1)';
+      imgEl.style.transformOrigin = 'center center';
+    }
+  }
+
   function showSlide(index) {
     if (activeMedia.length === 0) return;
+    
     mediaContainer.innerHTML = '';
     
-    // Wrap index around
     if (index >= activeMedia.length) index = 0;
     if (index < 0) index = activeMedia.length - 1;
     currentSlide = index;
 
-    const src = activeMedia[currentSlide];
+    const rawSrc = activeMedia[currentSlide];
+    const src = typeof rawSrc === 'object' ? (rawSrc.cover || rawSrc.video) : rawSrc;
     const isVideo = src.endsWith('.mp4') || src.endsWith('.webm') || src.endsWith('.mov');
 
     if (isVideo) {
       const videoEl = document.createElement('video');
-      videoEl.src = src;
+      videoEl.src = safeMediaSrc(src);
       videoEl.controls = true;
       videoEl.autoplay = true;
       videoEl.setAttribute('controlsList', 'nodownload');
@@ -763,11 +878,12 @@ const translations = {
       mediaContainer.appendChild(videoEl);
     } else {
       const imgEl = document.createElement('img');
-      imgEl.src = src;
+      imgEl.src = safeMediaSrc(src);
       imgEl.setAttribute('oncontextmenu', 'return false;');
       imgEl.setAttribute('ondragstart', 'return false;');
       imgEl.className = 'lightbox-img';
       mediaContainer.appendChild(imgEl);
+      initLightboxZoom(imgEl);
     }
 
     // Update dots
@@ -787,15 +903,259 @@ const translations = {
     });
   }
 
+  const fullZoomModal = document.getElementById('fullImageZoomModal');
+  const fullZoomClose = document.getElementById('fullZoomClose');
+  const fullZoomImg = document.getElementById('fullZoomImg');
+
+  if (fullZoomModal && fullZoomClose) {
+    fullZoomClose.addEventListener('click', () => {
+      fullZoomModal.classList.remove('active');
+      if (fullZoomImg) resetZoom(fullZoomImg);
+    });
+
+    fullZoomModal.addEventListener('click', (e) => {
+      if (e.target === fullZoomModal) {
+        fullZoomModal.classList.remove('active');
+        if (fullZoomImg) resetZoom(fullZoomImg);
+      }
+    });
+  }
+
+  function openFullImageZoomModal(src, title) {
+    if (!fullZoomModal || !fullZoomImg) return;
+    fullZoomImg.src = src;
+    fullZoomImg.alt = title || '';
+    resetZoom(fullZoomImg);
+    initLightboxZoom(fullZoomImg);
+    fullZoomModal.classList.add('active');
+  }
+
+  function openFullVideoModal(videoSrc, title) {
+    const videoModal = document.createElement('div');
+    videoModal.className = 'full-zoom-modal active';
+    videoModal.style.zIndex = '25000';
+    videoModal.innerHTML = `
+      <button class="full-zoom-close">&times;</button>
+      <div class="full-zoom-body" style="background:#000; padding:10px;">
+        <video src="${videoSrc}" controls autoplay playsinline style="max-width:100%; max-height:100%; border-radius:12px; box-shadow: 0 10px 40px rgba(0,0,0,0.8);"></video>
+      </div>
+    `;
+    const closeBtn = videoModal.querySelector('.full-zoom-close');
+    closeBtn.addEventListener('click', () => videoModal.remove());
+    videoModal.addEventListener('click', (e) => {
+      if (e.target === videoModal) videoModal.remove();
+    });
+    document.body.appendChild(videoModal);
+  }
+
+  function init3DCarousel(container, wrapper, mediaList, categoryLabel) {
+    function getCleanTitle(itemSrc) {
+      const src = (typeof itemSrc === 'object' && itemSrc !== null) ? (itemSrc.video || itemSrc.cover) : itemSrc;
+      const filename = String(src).split('/').pop().replace(/\.[^/.]+$/, "");
+      return decodeURIComponent(filename);
+    }
+
+    container.innerHTML = mediaList.map((item, i) => {
+      const isObj = typeof item === 'object' && item !== null;
+      const coverSrc = isObj ? item.cover : item;
+      const rawVideo = isObj ? item.video : (typeof item === 'string' && (item.endsWith('.mp4') || item.endsWith('.webm') || item.endsWith('.mov')) ? item : '');
+      const cleanTitle = getCleanTitle(item);
+      const isVideo = !!rawVideo;
+      const isStandaloneVideo = isVideo && !isObj;
+
+      const safeCover = safeMediaSrc(coverSrc);
+      const safeVideo = safeMediaSrc(rawVideo);
+
+      const mediaHtml = isStandaloneVideo
+        ? `<video src="${safeVideo}#t=0.5" muted playsinline preload="metadata" style="width:100%; height:100%; object-fit:cover; border-radius:14px; display:block;"></video>`
+        : `<img src="${safeCover}" alt="${cleanTitle}" loading="lazy" />`;
+
+      return `
+        <div class="portfolio-card ${isVideo ? 'video-card' : ''}" data-idx="${i}" data-src="${safeCover}" data-video="${safeVideo}" data-title="${cleanTitle}" style="--idx: ${i}">
+          ${mediaHtml}
+          ${isVideo ? `
+            <div class="video-play-indicator" style="z-index: 4;">
+              <svg class="icon-svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }).join('');
+
+    const cards = Array.from(container.querySelectorAll('.portfolio-card'));
+
+    function updateCenterCard() {
+      const wrapperRect = wrapper.getBoundingClientRect();
+      const wrapperCenter = wrapperRect.left + wrapperRect.width / 2;
+
+      let closestCard = null;
+      let minDistance = Infinity;
+
+      cards.forEach(card => {
+        const cardRect = card.getBoundingClientRect();
+        const cardCenter = cardRect.left + cardRect.width / 2;
+        const dist = Math.abs(wrapperCenter - cardCenter);
+
+        if (dist < minDistance) {
+          minDistance = dist;
+          closestCard = card;
+        }
+      });
+
+      cards.forEach(card => {
+        const cardRect = card.getBoundingClientRect();
+        const cardCenter = cardRect.left + cardRect.width / 2;
+
+        card.classList.remove('center-card', 'left-card', 'right-card');
+
+        if (card === closestCard) {
+          card.classList.add('center-card');
+        } else if (cardCenter < wrapperCenter) {
+          card.classList.add('left-card');
+        } else {
+          card.classList.add('right-card');
+        }
+      });
+
+      // Update caption below
+      if (closestCard) {
+        const idx = parseInt(closestCard.dataset.idx);
+        const title = closestCard.dataset.title;
+        const total = mediaList.length;
+
+        const formattedIndex = String(idx + 1).padStart(2, '0');
+        const formattedTotal = String(total).padStart(2, '0');
+
+        if (lightboxCat) {
+          lightboxCat.innerHTML = `
+            <span class="cat-label">${categoryLabel || ''}</span>
+            <span class="counter-badge">
+              <span class="counter-curr" id="counterCurr">${formattedIndex}</span>
+              <span class="counter-slash">/</span>
+              <span class="counter-total">${formattedTotal}</span>
+            </span>
+          `;
+          const counterCurr = document.getElementById('counterCurr');
+          if (counterCurr) {
+            counterCurr.classList.remove('num-pop');
+            void counterCurr.offsetWidth;
+            counterCurr.classList.add('num-pop');
+          }
+        }
+        if (lightboxTitle) {
+          lightboxTitle.textContent = title;
+        }
+      }
+    }
+
+    wrapper.addEventListener('scroll', updateCenterCard, { passive: true });
+    window.addEventListener('resize', updateCenterCard, { passive: true });
+
+    setTimeout(() => {
+      if (cards[0]) {
+        const cardRect = cards[0].getBoundingClientRect();
+        const wrapperRect = wrapper.getBoundingClientRect();
+        wrapper.scrollLeft = cards[0].offsetLeft - (wrapperRect.width / 2) + (cardRect.width / 2);
+      }
+      updateCenterCard();
+    }, 100);
+
+    let isDown = false;
+    let hasDragged = false;
+    let startX, scrollLeft;
+
+    wrapper.addEventListener('mousedown', (e) => {
+      isDown = true;
+      hasDragged = false;
+      startX = e.pageX - wrapper.offsetLeft;
+      scrollLeft = wrapper.scrollLeft;
+    });
+    wrapper.addEventListener('mouseleave', () => { isDown = false; });
+    wrapper.addEventListener('mouseup', () => { isDown = false; });
+    wrapper.addEventListener('mousemove', (e) => {
+      if(!isDown) return;
+      const x = e.pageX - wrapper.offsetLeft;
+      if (Math.abs(x - startX) > 6) {
+        hasDragged = true;
+      }
+      e.preventDefault();
+      const walk = (x - startX) * 1.5;
+      wrapper.scrollLeft = scrollLeft - walk;
+    });
+
+    wrapper.addEventListener('touchstart', (e) => {
+      isDown = true;
+      hasDragged = false;
+      startX = e.touches[0].pageX - wrapper.offsetLeft;
+      scrollLeft = wrapper.scrollLeft;
+    }, { passive: true });
+    wrapper.addEventListener('touchend', () => { isDown = false; });
+    wrapper.addEventListener('touchmove', (e) => {
+      if(!isDown) return;
+      const x = e.touches[0].pageX - wrapper.offsetLeft;
+      if (Math.abs(x - startX) > 6) {
+        hasDragged = true;
+      }
+      const walk = (x - startX) * 1.5;
+      wrapper.scrollLeft = scrollLeft - walk;
+    }, { passive: true });
+
+    cards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (hasDragged) {
+          hasDragged = false;
+          return;
+        }
+        if (card.classList.contains('center-card')) {
+          const videoSrc = card.dataset.video;
+          if (videoSrc && videoSrc.length > 0) {
+            openFullVideoModal(videoSrc, card.dataset.title);
+          } else {
+            openFullImageZoomModal(card.dataset.src, card.dataset.title);
+          }
+        } else {
+          const cardRect = card.getBoundingClientRect();
+          const wrapperRect = wrapper.getBoundingClientRect();
+          const delta = (cardRect.left + cardRect.width / 2) - (wrapperRect.left + wrapperRect.width / 2);
+          wrapper.scrollBy({ left: delta, behavior: 'smooth' });
+        }
+      });
+    });
+
+    return {
+      next: () => {
+        const centerCard = container.querySelector('.portfolio-card.center-card');
+        const targetCard = centerCard ? centerCard.nextElementSibling : cards[0];
+        if (targetCard) {
+          const cardRect = targetCard.getBoundingClientRect();
+          const wrapperRect = wrapper.getBoundingClientRect();
+          const delta = (cardRect.left + cardRect.width / 2) - (wrapperRect.left + wrapperRect.width / 2);
+          wrapper.scrollBy({ left: delta, behavior: 'smooth' });
+        }
+      },
+      prev: () => {
+        const centerCard = container.querySelector('.portfolio-card.center-card');
+        const targetCard = centerCard ? centerCard.previousElementSibling : cards[0];
+        if (targetCard) {
+          const cardRect = targetCard.getBoundingClientRect();
+          const wrapperRect = wrapper.getBoundingClientRect();
+          const delta = (cardRect.left + cardRect.width / 2) - (wrapperRect.left + wrapperRect.width / 2);
+          wrapper.scrollBy({ left: delta, behavior: 'smooth' });
+        }
+      }
+    };
+  }
+
   function openLightbox(item, lang) {
     if (!lightbox || !mediaContainer) return;
     mediaContainer.innerHTML = '';
+    mediaContainer.classList.remove('has-carousel');
     
     const content = item[lang] || item['ar'];
     lightboxCat.textContent = content.cat;
     lightboxTitle.textContent = content.title;
 
-    // Build media list
     activeMedia = [];
     if (item.media && Array.isArray(item.media) && item.media.length > 0) {
       activeMedia = item.media;
@@ -804,7 +1164,6 @@ const translations = {
       if (item.image) activeMedia.push(item.image);
     }
 
-    // Clean up any existing navigation arrows, dots and thumbnails
     const existingArrows = lightbox.querySelectorAll('.lightbox-arrow');
     existingArrows.forEach(el => el.remove());
     const existingDots = lightbox.querySelectorAll('.lightbox-dots');
@@ -812,71 +1171,113 @@ const translations = {
     const existingThumbs = lightbox.querySelectorAll('.lightbox-thumbnails');
     existingThumbs.forEach(el => el.remove());
 
+    const chevronLeft = `<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 18 9 12 15 6"></polyline></svg>`;
+    const chevronRight = `<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
+
     if (activeMedia.length > 1) {
+      mediaContainer.classList.add('has-carousel');
+      mediaContainer.innerHTML = `
+        <div class="portfolio-carousel-wrapper" id="smCarouselWrapper">
+          <div class="portfolio-carousel" id="smCarousel"></div>
+        </div>
+      `;
+      const smCarousel = document.getElementById('smCarousel');
+      const smCarouselWrapper = document.getElementById('smCarouselWrapper');
+      const carouselController = init3DCarousel(smCarousel, smCarouselWrapper, activeMedia, content.cat);
+
       const contentEl = lightbox.querySelector('.lightbox-content');
       const isRtl = document.documentElement.getAttribute('dir') === 'rtl' || lang === 'ar';
-      
+
       const prevBtn = document.createElement('button');
       prevBtn.className = 'lightbox-arrow prev';
-      prevBtn.innerHTML = '&lt;';
+      prevBtn.innerHTML = chevronLeft;
       prevBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        showSlide(isRtl ? currentSlide + 1 : currentSlide - 1);
+        if (isRtl) {
+          carouselController.next();
+        } else {
+          carouselController.prev();
+        }
       });
       contentEl.appendChild(prevBtn);
 
       const nextBtn = document.createElement('button');
       nextBtn.className = 'lightbox-arrow next';
-      nextBtn.innerHTML = '&gt;';
+      nextBtn.innerHTML = chevronRight;
       nextBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        showSlide(isRtl ? currentSlide - 1 : currentSlide + 1);
+        if (isRtl) {
+          carouselController.prev();
+        } else {
+          carouselController.next();
+        }
       });
       contentEl.appendChild(nextBtn);
-
-      const dotsContainer = document.createElement('div');
-      dotsContainer.className = 'lightbox-dots';
-      activeMedia.forEach((_, idx) => {
-        const dot = document.createElement('div');
-        dot.className = 'lightbox-dot';
-        dot.addEventListener('click', (e) => {
-          e.stopPropagation();
-          showSlide(idx);
-        });
-        dotsContainer.appendChild(dot);
-      });
-      contentEl.appendChild(dotsContainer);
-
-      // Create thumbnails strip
-      const thumbsContainer = document.createElement('div');
-      thumbsContainer.className = 'lightbox-thumbnails';
-      activeMedia.forEach((src, idx) => {
-        const thumb = document.createElement('div');
-        thumb.className = `lightbox-thumb ${idx === 0 ? 'active' : ''}`;
-        const isVideo = src.endsWith('.mp4') || src.endsWith('.webm') || src.endsWith('.mov');
-        if (isVideo) {
-          thumb.innerHTML = `<span class="thumb-type-badge">${lang === 'ar' ? 'فيديو' : 'Video'} ${idx + 1}</span><video src="${src}" muted playsinline controlsList="nodownload" oncontextmenu="return false;" ondragstart="return false;"></video>`;
-        } else {
-          thumb.innerHTML = `<img src="${src}" oncontextmenu="return false;" ondragstart="return false;" />`;
-        }
-        thumb.addEventListener('click', (e) => {
-          e.stopPropagation();
-          showSlide(idx);
-        });
-        thumbsContainer.appendChild(thumb);
-      });
-      contentEl.appendChild(thumbsContainer);
-
-      showSlide(0);
-    } else if (activeMedia.length === 1) {
-      showSlide(0);
     } else {
-      // Fallback emoji visual
-      const fallbackEl = document.createElement('div');
-      fallbackEl.className = 'lightbox-fallback';
-      fallbackEl.style.background = item.gradient || 'var(--card-bg)';
-      fallbackEl.innerHTML = `<span style="font-size: 80px;">${item.bg}</span>`;
-      mediaContainer.appendChild(fallbackEl);
+      if (activeMedia.length > 1) {
+        const contentEl = lightbox.querySelector('.lightbox-content');
+        const isRtl = document.documentElement.getAttribute('dir') === 'rtl' || lang === 'ar';
+        
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'lightbox-arrow prev';
+        prevBtn.innerHTML = chevronLeft;
+        prevBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          showSlide(isRtl ? currentSlide + 1 : currentSlide - 1);
+        });
+        contentEl.appendChild(prevBtn);
+
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'lightbox-arrow next';
+        nextBtn.innerHTML = chevronRight;
+        nextBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          showSlide(isRtl ? currentSlide - 1 : currentSlide + 1);
+        });
+        contentEl.appendChild(nextBtn);
+
+        const dotsContainer = document.createElement('div');
+        dotsContainer.className = 'lightbox-dots';
+        activeMedia.forEach((_, idx) => {
+          const dot = document.createElement('div');
+          dot.className = 'lightbox-dot';
+          dot.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showSlide(idx);
+          });
+          dotsContainer.appendChild(dot);
+        });
+        contentEl.appendChild(dotsContainer);
+
+        const thumbsContainer = document.createElement('div');
+        thumbsContainer.className = 'lightbox-thumbnails';
+        activeMedia.forEach((src, idx) => {
+          const thumb = document.createElement('div');
+          thumb.className = `lightbox-thumb ${idx === 0 ? 'active' : ''}`;
+          const isVideo = src.endsWith('.mp4') || src.endsWith('.webm') || src.endsWith('.mov');
+          if (isVideo) {
+            thumb.innerHTML = `<span class="thumb-type-badge">${lang === 'ar' ? 'فيديو' : 'Video'} ${idx + 1}</span><video src="${src}" muted playsinline controlsList="nodownload" oncontextmenu="return false;" ondragstart="return false;"></video>`;
+          } else {
+            thumb.innerHTML = `<img src="${src}" oncontextmenu="return false;" ondragstart="return false;" />`;
+          }
+          thumb.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showSlide(idx);
+          });
+          thumbsContainer.appendChild(thumb);
+        });
+        contentEl.appendChild(thumbsContainer);
+
+        showSlide(0);
+      } else if (activeMedia.length === 1) {
+        showSlide(0);
+      } else {
+        const fallbackEl = document.createElement('div');
+        fallbackEl.className = 'lightbox-fallback';
+        fallbackEl.style.background = item.gradient || 'var(--card-bg)';
+        fallbackEl.innerHTML = `<span style="font-size: 80px;">${item.bg}</span>`;
+        mediaContainer.appendChild(fallbackEl);
+      }
     }
 
     lightbox.classList.add('active');
@@ -913,19 +1314,25 @@ const translations = {
       let thumbnailSrc = item.image;
 
       if (item.media && Array.isArray(item.media) && item.media.length > 0) {
-        // Check if first slide is video or image
         const firstMedia = item.media[0];
-        const isFirstVideo = firstMedia.endsWith('.mp4') || firstMedia.endsWith('.webm') || firstMedia.endsWith('.mov');
+        const isObj = typeof firstMedia === 'object' && firstMedia !== null;
+        const mediaSrc = isObj ? (firstMedia.cover || firstMedia.video || '') : String(firstMedia);
+        const isFirstVideo = isObj ? (!!firstMedia.video && !firstMedia.cover) : (mediaSrc.endsWith('.mp4') || mediaSrc.endsWith('.webm') || mediaSrc.endsWith('.mov'));
         
         if (isFirstVideo) {
           hasVideo = true;
         } else {
           hasImage = true;
-          thumbnailSrc = firstMedia;
+          if (!item.image) {
+            thumbnailSrc = mediaSrc;
+          }
         }
 
-        // Check if any of the items is a video to show play indicator
-        const anyVideo = item.media.some(src => src.endsWith('.mp4') || src.endsWith('.webm') || src.endsWith('.mov'));
+        const anyVideo = item.media.some(m => {
+          if (typeof m === 'object' && m !== null) return !!m.video;
+          if (typeof m === 'string') return m.endsWith('.mp4') || m.endsWith('.webm') || m.endsWith('.mov');
+          return false;
+        });
         if (anyVideo) {
           hasVideo = true;
         }
@@ -934,10 +1341,11 @@ const translations = {
       let bgStyle = '';
       let videoTag = '';
       if (hasImage && thumbnailSrc) {
-        bgStyle = `background-image: url('${thumbnailSrc}');`;
+        const safeSrc = thumbnailSrc.replace(/'/g, "%27");
+        bgStyle = `background-image: url('${safeSrc}');`;
       } else if (hasVideo) {
         const firstVideoSrc = (item.media && Array.isArray(item.media)) 
-          ? item.media.find(src => src.endsWith('.mp4') || src.endsWith('.webm') || src.endsWith('.mov')) 
+          ? item.media.map(m => (typeof m === 'object' && m !== null) ? m.video : m).find(src => typeof src === 'string' && (src.endsWith('.mp4') || src.endsWith('.webm') || src.endsWith('.mov'))) 
           : item.video;
         if (firstVideoSrc) {
           videoTag = `<video class="pf-video-preview" src="${firstVideoSrc}" autoplay muted loop playsinline controlsList="nodownload" oncontextmenu="return false;" ondragstart="return false;"></video>`;
@@ -949,11 +1357,19 @@ const translations = {
         bgStyle = `background: ${item.gradient};`;
       }
       
+      const indicatorText = lang === 'ar' ? 'استعرض الأعمال' : 'Explore Work';
+      const iconHtml = hasVideo 
+        ? '<svg class="icon-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'
+        : '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+
       itemEl.innerHTML = `
         <div class="pf-bg" style="${bgStyle}">
           ${videoTag}
           ${(!hasImage && !videoTag) ? item.bg : ''}
-          ${hasVideo ? '<div class="video-play-indicator" style="z-index: 2;"><svg class="icon-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>' : ''}
+          <div class="video-play-indicator" style="z-index: 2;">
+            ${iconHtml}
+            <span class="play-indicator-text">${indicatorText}</span>
+          </div>
         </div>
         <div class="pf-overlay">
           <span class="pf-cat">${content.cat}</span>

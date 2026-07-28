@@ -967,8 +967,8 @@ const translations = {
       const safeVideo = safeMediaSrc(rawVideo);
 
       const mediaHtml = isStandaloneVideo
-        ? `<video src="${safeVideo}#t=0.5" muted playsinline preload="metadata" style="width:100%; height:100%; object-fit:cover; border-radius:14px; display:block;"></video>`
-        : `<img src="${safeCover}" alt="${cleanTitle}" loading="lazy" />`;
+        ? `<video src="${safeVideo}#t=0.5" muted playsinline preload="none" style="width:100%; height:100%; object-fit:cover; border-radius:14px; display:block;"></video>`
+        : `<img src="${safeCover}" alt="${cleanTitle}" loading="lazy" decoding="async" />`;
 
       return `
         <div class="portfolio-card ${isVideo ? 'video-card' : ''}" data-idx="${i}" data-src="${safeCover}" data-video="${safeVideo}" data-title="${cleanTitle}" style="--idx: ${i}">

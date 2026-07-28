@@ -800,9 +800,15 @@ const translations = {
   let activeMedia = [];
   let currentSlide = 0;
 
+  function d(b) {
+    if (!b) return '';
+    try { return decodeURIComponent(escape(atob(b))); } catch(e) { return b; }
+  }
+
   function safeMediaSrc(path) {
     if (!path) return '';
-    return path.replace(/\?/g, '%3F').replace(/#/g, '%23').replace(/'/g, '%27');
+    const decoded = d(path);
+    return decoded.replace(/\?/g, '%3F').replace(/#/g, '%23').replace(/'/g, '%27');
   }
 
   function initLightboxZoom(imgEl) {
@@ -873,14 +879,14 @@ const translations = {
       videoEl.controls = true;
       videoEl.autoplay = true;
       videoEl.setAttribute('controlsList', 'nodownload');
-      videoEl.setAttribute('oncontextmenu', 'return false;');
+      videoEl.addEventListener('contextmenu', e => e.preventDefault());
       videoEl.className = 'lightbox-video';
       mediaContainer.appendChild(videoEl);
     } else {
       const imgEl = document.createElement('img');
       imgEl.src = safeMediaSrc(src);
-      imgEl.setAttribute('oncontextmenu', 'return false;');
-      imgEl.setAttribute('ondragstart', 'return false;');
+      imgEl.addEventListener('contextmenu', e => e.preventDefault());
+      imgEl.addEventListener('dragstart', e => e.preventDefault());
       imgEl.className = 'lightbox-img';
       mediaContainer.appendChild(imgEl);
       initLightboxZoom(imgEl);
@@ -934,14 +940,28 @@ const translations = {
     const videoModal = document.createElement('div');
     videoModal.className = 'full-zoom-modal active';
     videoModal.style.zIndex = '25000';
-    videoModal.innerHTML = `
-      <button class="full-zoom-close">&times;</button>
-      <div class="full-zoom-body" style="background:#000; padding:10px;">
-        <video src="${videoSrc}" controls autoplay playsinline style="max-width:100%; max-height:100%; border-radius:12px; box-shadow: 0 10px 40px rgba(0,0,0,0.8);"></video>
-      </div>
-    `;
-    const closeBtn = videoModal.querySelector('.full-zoom-close');
+
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'full-zoom-close';
+    closeBtn.textContent = '\u00D7';
     closeBtn.addEventListener('click', () => videoModal.remove());
+
+    const body = document.createElement('div');
+    body.className = 'full-zoom-body';
+    body.style.cssText = 'background:#000; padding:10px;';
+
+    const videoEl = document.createElement('video');
+    videoEl.src = videoSrc;
+    videoEl.controls = true;
+    videoEl.autoplay = true;
+    videoEl.setAttribute('playsinline', '');
+    videoEl.setAttribute('controlsList', 'nodownload');
+    videoEl.addEventListener('contextmenu', e => e.preventDefault());
+    videoEl.style.cssText = 'max-width:100%; max-height:100%; border-radius:12px; box-shadow: 0 10px 40px rgba(0,0,0,0.8);';
+
+    body.appendChild(videoEl);
+    videoModal.appendChild(closeBtn);
+    videoModal.appendChild(body);
     videoModal.addEventListener('click', (e) => {
       if (e.target === videoModal) videoModal.remove();
     });
@@ -957,21 +977,35 @@ const translations = {
 
     container.innerHTML = mediaList.map((item, i) => {
       const isObj = typeof item === 'object' && item !== null;
-      const coverSrc = isObj ? item.cover : item;
-      const rawVideo = isObj ? item.video : (typeof item === 'string' && (item.endsWith('.mp4') || item.endsWith('.webm') || item.endsWith('.mov')) ? item : '');
-      const cleanTitle = getCleanTitle(item);
+      const coverSrcRaw = isObj ? item.cover : item;
+      const videoSrcRaw = isObj ? item.video : '';
+      const coverSrc = d(coverSrcRaw);
+      const videoSrc = d(videoSrcRaw);
+      const itemDecoded = isObj ? { cover: coverSrc, video: videoSrc } : coverSrc;
+      const rawVideo = isObj ? videoSrc : (typeof coverSrc === 'string' && (coverSrc.endsWith('.mp4') || coverSrc.endsWith('.webm') || coverSrc.endsWith('.mov')) ? coverSrc : '');
+      const cleanTitle = getCleanTitle(itemDecoded);
       const isVideo = !!rawVideo;
       const isStandaloneVideo = isVideo && !isObj;
 
-      const safeCover = safeMediaSrc(coverSrc);
-      const safeVideo = safeMediaSrc(rawVideo);
+      function enc(p) { return p ? p.replace(/\?/g, '%3F').replace(/#/g, '%23').replace(/'/g, '%27') : ''; }
+      const safeCover = enc(coverSrc);
+      const safeVideo = enc(rawVideo);
 
-      const mediaHtml = isStandaloneVideo
-        ? `<video src="${safeVideo}#t=0.5" muted playsinline preload="none" style="width:100%; height:100%; object-fit:cover; border-radius:14px; display:block;"></video>`
-        : `<img src="${safeCover}" alt="${cleanTitle}" loading="lazy" decoding="async" />`;
+      // Escape attribute values to prevent HTML injection
+      function escAttr(s) {
+        return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      }
+      const safeTitle = escAttr(cleanTitle);
+
+      let mediaHtml;
+      if (isStandaloneVideo) {
+        mediaHtml = `<video class="carousel-thumb-video" src="${safeVideo}" muted playsinline preload="metadata" style="width:100%; height:100%; object-fit:cover; border-radius:14px; display:block;" data-thumb="1"></video>`;
+      } else {
+        mediaHtml = `<img src="${safeCover}" alt="${safeTitle}" loading="lazy" decoding="async" />`;
+      }
 
       return `
-        <div class="portfolio-card ${isVideo ? 'video-card' : ''}" data-idx="${i}" data-src="${safeCover}" data-video="${safeVideo}" data-title="${cleanTitle}" style="--idx: ${i}">
+        <div class="portfolio-card ${isVideo ? 'video-card' : ''}" data-idx="${i}" data-src="${safeCover}" data-video="${safeVideo}" data-title="${safeTitle}" style="--idx: ${i}">
           ${mediaHtml}
           ${isVideo ? `
             <div class="video-play-indicator" style="z-index: 4;">
@@ -981,6 +1015,15 @@ const translations = {
         </div>
       `;
     }).join('');
+
+    // After building HTML, seek all thumb videos to first frame
+    requestAnimationFrame(() => {
+      container.querySelectorAll('video[data-thumb]').forEach(v => {
+        const seek = () => { try { v.currentTime = 0.1; } catch(e) {} };
+        if (v.readyState >= 1) { seek(); }
+        else { v.addEventListener('loadedmetadata', seek, { once: true }); }
+      });
+    });
 
     const cards = Array.from(container.querySelectorAll('.portfolio-card'));
 
@@ -1027,14 +1070,34 @@ const translations = {
         const formattedTotal = String(total).padStart(2, '0');
 
         if (lightboxCat) {
-          lightboxCat.innerHTML = `
-            <span class="cat-label">${categoryLabel || ''}</span>
-            <span class="counter-badge">
-              <span class="counter-curr" id="counterCurr">${formattedIndex}</span>
-              <span class="counter-slash">/</span>
-              <span class="counter-total">${formattedTotal}</span>
-            </span>
-          `;
+          lightboxCat.innerHTML = '';
+
+          const catLabelSpan = document.createElement('span');
+          catLabelSpan.className = 'cat-label';
+          catLabelSpan.textContent = categoryLabel || '';
+
+          const counterBadge = document.createElement('span');
+          counterBadge.className = 'counter-badge';
+
+          const counterCurrSpan = document.createElement('span');
+          counterCurrSpan.className = 'counter-curr';
+          counterCurrSpan.id = 'counterCurr';
+          counterCurrSpan.textContent = formattedIndex;
+
+          const slashSpan = document.createElement('span');
+          slashSpan.className = 'counter-slash';
+          slashSpan.textContent = '/';
+
+          const totalSpan = document.createElement('span');
+          totalSpan.className = 'counter-total';
+          totalSpan.textContent = formattedTotal;
+
+          counterBadge.appendChild(counterCurrSpan);
+          counterBadge.appendChild(slashSpan);
+          counterBadge.appendChild(totalSpan);
+          lightboxCat.appendChild(catLabelSpan);
+          lightboxCat.appendChild(counterBadge);
+
           const counterCurr = document.getElementById('counterCurr');
           if (counterCurr) {
             counterCurr.classList.remove('num-pop');
@@ -1256,9 +1319,24 @@ const translations = {
           thumb.className = `lightbox-thumb ${idx === 0 ? 'active' : ''}`;
           const isVideo = src.endsWith('.mp4') || src.endsWith('.webm') || src.endsWith('.mov');
           if (isVideo) {
-            thumb.innerHTML = `<span class="thumb-type-badge">${lang === 'ar' ? 'فيديو' : 'Video'} ${idx + 1}</span><video src="${src}" muted playsinline controlsList="nodownload" oncontextmenu="return false;" ondragstart="return false;"></video>`;
+            const badge = document.createElement('span');
+            badge.className = 'thumb-type-badge';
+            badge.textContent = (lang === 'ar' ? '\u0641\u064A\u062F\u064A\u0648' : 'Video') + ' ' + (idx + 1);
+            const vidEl = document.createElement('video');
+            vidEl.src = src;
+            vidEl.muted = true;
+            vidEl.setAttribute('playsinline', '');
+            vidEl.setAttribute('controlsList', 'nodownload');
+            vidEl.addEventListener('contextmenu', e => e.preventDefault());
+            vidEl.addEventListener('dragstart', e => e.preventDefault());
+            thumb.appendChild(badge);
+            thumb.appendChild(vidEl);
           } else {
-            thumb.innerHTML = `<img src="${src}" oncontextmenu="return false;" ondragstart="return false;" />`;
+            const imgEl = document.createElement('img');
+            imgEl.src = src;
+            imgEl.addEventListener('contextmenu', e => e.preventDefault());
+            imgEl.addEventListener('dragstart', e => e.preventDefault());
+            thumb.appendChild(imgEl);
           }
           thumb.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -1275,7 +1353,10 @@ const translations = {
         const fallbackEl = document.createElement('div');
         fallbackEl.className = 'lightbox-fallback';
         fallbackEl.style.background = item.gradient || 'var(--card-bg)';
-        fallbackEl.innerHTML = `<span style="font-size: 80px;">${item.bg}</span>`;
+        const emojiSpan = document.createElement('span');
+        emojiSpan.style.fontSize = '80px';
+        emojiSpan.textContent = item.bg || '';
+        fallbackEl.appendChild(emojiSpan);
         mediaContainer.appendChild(fallbackEl);
       }
     }
@@ -1311,12 +1392,13 @@ const translations = {
       // Determine background styles and video indicator from either single properties or the media list
       let hasImage = item.image;
       let hasVideo = item.video;
-      let thumbnailSrc = item.image;
+      let thumbnailSrc = d(item.image);
 
       if (item.media && Array.isArray(item.media) && item.media.length > 0) {
         const firstMedia = item.media[0];
         const isObj = typeof firstMedia === 'object' && firstMedia !== null;
-        const mediaSrc = isObj ? (firstMedia.cover || firstMedia.video || '') : String(firstMedia);
+        const mediaSrcRaw = isObj ? (firstMedia.cover || firstMedia.video || '') : String(firstMedia);
+        const mediaSrc = d(mediaSrcRaw);
         const isFirstVideo = isObj ? (!!firstMedia.video && !firstMedia.cover) : (mediaSrc.endsWith('.mp4') || mediaSrc.endsWith('.webm') || mediaSrc.endsWith('.mov'));
         
         if (isFirstVideo) {
@@ -1330,7 +1412,7 @@ const translations = {
 
         const anyVideo = item.media.some(m => {
           if (typeof m === 'object' && m !== null) return !!m.video;
-          if (typeof m === 'string') return m.endsWith('.mp4') || m.endsWith('.webm') || m.endsWith('.mov');
+          if (typeof m === 'string') { const dec = d(m); return dec.endsWith('.mp4') || dec.endsWith('.webm') || dec.endsWith('.mov'); }
           return false;
         });
         if (anyVideo) {
@@ -1338,50 +1420,80 @@ const translations = {
         }
       }
 
-      let bgStyle = '';
-      let videoTag = '';
-      if (hasImage && thumbnailSrc) {
-        const safeSrc = thumbnailSrc.replace(/'/g, "%27");
-        bgStyle = `background-image: url('${safeSrc}');`;
-      } else if (hasVideo) {
-        const firstVideoSrc = (item.media && Array.isArray(item.media)) 
-          ? item.media.map(m => (typeof m === 'object' && m !== null) ? m.video : m).find(src => typeof src === 'string' && (src.endsWith('.mp4') || src.endsWith('.webm') || src.endsWith('.mov'))) 
-          : item.video;
-        if (firstVideoSrc) {
-          videoTag = `<video class="pf-video-preview" src="${firstVideoSrc}" autoplay muted loop playsinline controlsList="nodownload" oncontextmenu="return false;" ondragstart="return false;"></video>`;
-        }
-        if (item.gradient) {
-          bgStyle = `background: ${item.gradient};`;
-        }
-      } else if (item.gradient) {
-        bgStyle = `background: ${item.gradient};`;
+      let firstVideoSrc = '';
+      if (hasVideo) {
+        const firstVideoSrcRaw = (item.media && Array.isArray(item.media))
+          ? item.media.map(m => d((typeof m === 'object' && m !== null) ? m.video : m)).find(src => typeof src === 'string' && (src.endsWith('.mp4') || src.endsWith('.webm') || src.endsWith('.mov')))
+          : d(item.video);
+        firstVideoSrc = firstVideoSrcRaw || '';
       }
-      
+
+      // Build pf-bg div safely using DOM API
+      const pfBg = document.createElement('div');
+      pfBg.className = 'pf-bg';
+
+      if (hasImage && thumbnailSrc) {
+        const safeSrc = thumbnailSrc.replace(/\?/g, '%3F').replace(/#/g, '%23').replace(/'/g, '%27');
+        pfBg.style.backgroundImage = `url('${safeSrc}')`;
+      } else if (item.gradient) {
+        pfBg.style.background = item.gradient;
+      }
+
+      if (hasVideo && firstVideoSrc && !hasImage) {
+        const videoEl = document.createElement('video');
+        videoEl.className = 'pf-video-preview';
+        videoEl.src = firstVideoSrc + '#t=0.001';
+        videoEl.muted = true;
+        videoEl.setAttribute('playsinline', '');
+        videoEl.setAttribute('preload', 'metadata');
+        videoEl.setAttribute('controlsList', 'nodownload');
+        videoEl.addEventListener('contextmenu', e => e.preventDefault());
+        videoEl.addEventListener('dragstart', e => e.preventDefault());
+        pfBg.appendChild(videoEl);
+      } else if (!hasImage) {
+        const emojiSpan = document.createElement('span');
+        emojiSpan.textContent = item.bg || '';
+        pfBg.appendChild(emojiSpan);
+      }
+
       const indicatorText = lang === 'ar' ? 'استعرض الأعمال' : 'Explore Work';
-      const iconHtml = hasVideo 
+      const indicator = document.createElement('div');
+      indicator.className = 'video-play-indicator';
+      indicator.style.zIndex = '2';
+
+      // Static SVG icon — safe because it's a static string, not user data
+      const iconSvg = hasVideo
         ? '<svg class="icon-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'
         : '<svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+      indicator.innerHTML = iconSvg; // static SVG only — safe
 
-      itemEl.innerHTML = `
-        <div class="pf-bg" style="${bgStyle}">
-          ${videoTag}
-          ${(!hasImage && !videoTag) ? item.bg : ''}
-          <div class="video-play-indicator" style="z-index: 2;">
-            ${iconHtml}
-            <span class="play-indicator-text">${indicatorText}</span>
-          </div>
-        </div>
-        <div class="pf-overlay">
-          <span class="pf-cat">${content.cat}</span>
-          <h3 class="pf-title">${content.title}</h3>
-        </div>
-      `;
-      
+      const indicatorTextEl = document.createElement('span');
+      indicatorTextEl.className = 'play-indicator-text';
+      indicatorTextEl.textContent = indicatorText;
+      indicator.appendChild(indicatorTextEl);
+      pfBg.appendChild(indicator);
+      itemEl.appendChild(pfBg);
+
+      // Build pf-overlay div safely
+      const pfOverlay = document.createElement('div');
+      pfOverlay.className = 'pf-overlay';
+
+      const catSpan = document.createElement('span');
+      catSpan.className = 'pf-cat';
+      catSpan.textContent = content.cat;
+      pfOverlay.appendChild(catSpan);
+
+      const titleH3 = document.createElement('h3');
+      titleH3.className = 'pf-title';
+      titleH3.textContent = content.title;
+      pfOverlay.appendChild(titleH3);
+      itemEl.appendChild(pfOverlay);
+
       // Open lightbox on click
       itemEl.addEventListener('click', () => {
         openLightbox(item, lang);
       });
-      
+
       grid.appendChild(itemEl);
       if (typeof revealObserver !== 'undefined' && revealObserver) {
         revealObserver.observe(itemEl);
@@ -1553,7 +1665,7 @@ const translations = {
         });
         heroAudio.play()
           .then(updateBtnState)
-          .catch(err => console.log('Audio playback prevented:', err));
+          .catch(() => {});
       } else {
         heroAudio.pause();
         updateBtnState();

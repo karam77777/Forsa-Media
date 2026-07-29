@@ -1219,6 +1219,11 @@ const translations = {
     lightboxCat.textContent = content.cat;
     lightboxTitle.textContent = content.title;
 
+    // Meta Pixel Tracking: Portfolio View (ViewContent) & Project Details (ProjectViewed)
+    if (window.ForsaPixel) {
+      window.ForsaPixel.trackPortfolioView(item, content);
+    }
+
     activeMedia = [];
     if (item.media && Array.isArray(item.media) && item.media.length > 0) {
       activeMedia = item.media;
@@ -1510,6 +1515,9 @@ const translations = {
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const filter = btn.dataset.filter;
+      if (window.ForsaPixel) {
+        window.ForsaPixel.trackCategoryView(filter, btn.textContent.trim());
+      }
       document.querySelectorAll('.portfolio-item').forEach(item => {
         const match = filter === 'all' || item.dataset.cat === filter;
         item.classList.toggle('hide', !match);
@@ -1615,19 +1623,8 @@ const translations = {
     }
 
     // Meta Pixel Event Tracking for Lead & Contact Form Submission
-    if (typeof window.fbq === 'function') {
-      try {
-        window.fbq('track', 'Lead', {
-          content_name: 'Contact Form Lead',
-          business_type: biz
-        });
-        window.fbq('trackCustom', 'ContactFormSubmit', {
-          business_type: biz
-        });
-        window.fbq('track', 'Contact', {
-          content_name: 'Form WhatsApp Redirect'
-        });
-      } catch (err) {}
+    if (window.ForsaPixel) {
+      window.ForsaPixel.trackContactFormSubmit(biz);
     }
 
     let text = `📩 طلب جديد من الموقع / New Inquiry:
@@ -1770,38 +1767,173 @@ const translations = {
   }
 
   /* ============================================
-     META PIXEL CLICK TRACKING
+     META PIXEL COMPLETE TRACKING SYSTEM
      ============================================ */
-  document.addEventListener('click', (e) => {
-    if (typeof window.fbq !== 'function') return;
-
-    // Track WhatsApp link clicks
-    const waBtn = e.target.closest('a[href*="wa.me"], .social-btn.whatsapp');
-    if (waBtn) {
+  const ForsaPixel = {
+    // Safe tracker helper to prevent duplicate/broken execution
+    track: function(eventName, params = {}, isCustom = false) {
+      if (typeof window.fbq !== 'function') return;
       try {
-        window.fbq('track', 'Contact', {
-          content_name: 'WhatsApp Button Click',
-          link_url: waBtn.href || 'WhatsApp'
-        });
-        window.fbq('trackCustom', 'WhatsAppClick', {
-          location: waBtn.getAttribute('data-i18n') || 'WhatsApp Link'
-        });
+        if (isCustom) {
+          window.fbq('trackCustom', eventName, params);
+        } else {
+          window.fbq('track', eventName, params);
+        }
       } catch (err) {}
-    }
+    },
 
-    // Track "اطلب الخدمة" / Service Request / CTA Buttons
-    const srvBtn = e.target.closest('.service-link, [data-i18n="hero-btn-start"], [data-i18n="btn-consult"], [data-i18n="pkg-btn"], [data-i18n="srv-more"]');
-    if (srvBtn) {
-      try {
-        const btnText = srvBtn.textContent.trim();
-        window.fbq('track', 'Lead', {
-          content_name: btnText || 'Service Request Click'
+    // 2. Portfolio View (ViewContent) & 4. Project Details (ProjectViewed)
+    trackPortfolioView: function(item, content) {
+      const title = content ? content.title : 'Project';
+      const catName = content ? content.cat : (item.category || 'Portfolio');
+      const projId = 'pf_' + (item.category || 'item') + '_' + title.replace(/[^a-zA-Z0-9\u0600-\u06FF]/g, '_');
+
+      // Standard ViewContent
+      this.track('ViewContent', {
+        content_type: 'portfolio',
+        content_name: title,
+        content_category: catName,
+        content_id: projId
+      });
+
+      // Custom ProjectViewed
+      this.track('ProjectViewed', {
+        project_name: title,
+        project_category: catName,
+        project_id: projId
+      }, true);
+    },
+
+    // 3. Portfolio Category View
+    trackCategoryView: function(filterKey, buttonLabel) {
+      const categoryMap = {
+        'all': 'All Projects',
+        'social': 'Social Media',
+        'design': 'Visual Identity & Graphic Design',
+        'print': 'Printing',
+        'ads': 'Advertising Campaigns',
+        'videos': 'Video Editing'
+      };
+      const catName = categoryMap[filterKey] || buttonLabel || filterKey;
+      this.track('PortfolioCategoryView', { category: catName }, true);
+    },
+
+    // 11. Contact Form Lead Submission
+    trackContactFormSubmit: function(bizType) {
+      this.track('Lead', {
+        content_name: 'Contact Form Lead',
+        business_type: bizType
+      });
+      this.track('ContactFormSubmit', {
+        business_type: bizType,
+        name_provided: true
+      }, true);
+    },
+
+    // Auto Tracking Setup (Scroll, Time, Clicks, Downloads)
+    initAutoTracking: function() {
+      const self = this;
+
+      // 12. Scroll Depth Tracking (25%, 50%, 75%, 100%) — Fires once per threshold per session
+      const firedDepths = new Set();
+      const checkScrollDepth = () => {
+        const winHeight = window.innerHeight;
+        const docHeight = document.documentElement.scrollHeight - winHeight;
+        if (docHeight <= 0) return;
+        const scrollPct = Math.round((window.scrollY / docHeight) * 100);
+
+        const thresholds = [25, 50, 75, 100];
+        thresholds.forEach(t => {
+          if (scrollPct >= t && !firedDepths.has(t)) {
+            firedDepths.add(t);
+            self.track('ScrollDepth', { depth: t + '%' }, true);
+          }
         });
-        window.fbq('trackCustom', 'RequestService', {
-          button_text: btnText
-        });
-      } catch (err) {}
+      };
+
+      let scrollDebounce;
+      window.addEventListener('scroll', () => {
+        if (!scrollDebounce) {
+          scrollDebounce = setTimeout(() => {
+            scrollDebounce = null;
+            checkScrollDepth();
+          }, 250);
+        }
+      }, { passive: true });
+
+      // 13. Time On Page Tracking (30s, 60s, 120s) — Fires once per threshold
+      const timeThresholds = [30, 60, 120];
+      timeThresholds.forEach(sec => {
+        setTimeout(() => {
+          self.track('TimeOnPage', { seconds: sec }, true);
+        }, sec * 1000);
+      });
+
+      // Unified Event Delegation (5-10, 14: WhatsApp, FB, IG, Phone, Email, Request Service, Downloads)
+      document.addEventListener('click', (e) => {
+        // 5. WhatsApp Click
+        const waLink = e.target.closest('a[href*="wa.me"], .social-btn.whatsapp');
+        if (waLink) {
+          const loc = waLink.closest('header') ? 'header' :
+                      waLink.closest('footer') ? 'footer' :
+                      waLink.closest('.contact') ? 'contact_section' : 'button';
+          self.track('Contact', { content_name: 'WhatsApp Click', location: loc });
+          self.track('WhatsAppClick', { location: loc }, true);
+          return;
+        }
+
+        // 6. Facebook Click
+        const fbLink = e.target.closest('a[href*="facebook.com"], .social-btn.facebook');
+        if (fbLink) {
+          const loc = fbLink.closest('footer') ? 'footer' : 'contact_section';
+          self.track('FacebookClick', { location: loc }, true);
+          return;
+        }
+
+        // 7. Instagram Click
+        const igLink = e.target.closest('a[href*="instagram.com"], .social-btn.instagram');
+        if (igLink) {
+          const loc = igLink.closest('footer') ? 'footer' : 'contact_section';
+          self.track('InstagramClick', { location: loc }, true);
+          return;
+        }
+
+        // 8. Phone Call Click
+        const phoneCard = e.target.closest('.contact-card');
+        const phoneLink = e.target.closest('a[href^="tel:"]') || (phoneCard && phoneCard.textContent.includes('201101742867'));
+        if (phoneLink) {
+          self.track('PhoneCallClick', { phone_number: '+201101742867' }, true);
+          return;
+        }
+
+        // 9. Email Click
+        const mailLink = e.target.closest('a[href^="mailto:"]');
+        if (mailLink) {
+          self.track('EmailClick', { email_address: 'info@forsa-media.com' }, true);
+          return;
+        }
+
+        // 10. Request Service Click
+        const srvBtn = e.target.closest('.service-link, [data-i18n="hero-btn-start"], [data-i18n="btn-consult"], [data-i18n="pkg-btn"], [data-i18n="srv-more"]');
+        if (srvBtn) {
+          const btnText = srvBtn.textContent.trim();
+          self.track('Lead', { content_name: btnText || 'Request Service' });
+          self.track('RequestService', { button_text: btnText }, true);
+          return;
+        }
+
+        // 14. File Downloads Tracking (.pdf, .zip, .doc, .docx, or download attr)
+        const dlLink = e.target.closest('a[href$=".pdf"], a[href$=".zip"], a[href$=".doc"], a[href$=".docx"], a[download]');
+        if (dlLink) {
+          const href = dlLink.href || '';
+          const name = dlLink.download || href.split('/').pop() || 'File';
+          self.track('FileDownload', { file_name: name, file_url: href }, true);
+        }
+      }, { passive: true });
     }
-  }, { passive: true });
+  };
+
+  window.ForsaPixel = ForsaPixel;
+  ForsaPixel.initAutoTracking();
 
 })();

@@ -999,7 +999,7 @@ const translations = {
 
       let mediaHtml;
       if (isStandaloneVideo) {
-        mediaHtml = `<video class="carousel-thumb-video" src="${safeVideo}" muted playsinline preload="metadata" style="width:100%; height:100%; object-fit:cover; border-radius:14px; display:block;" data-thumb="1"></video>`;
+        mediaHtml = `<video class="carousel-thumb-video" src="${safeVideo}#t=0.001" muted playsinline preload="metadata" style="width:100%; height:100%; object-fit:cover; border-radius:14px; display:block;" data-thumb="1"></video>`;
       } else {
         mediaHtml = `<img src="${safeCover}" alt="${safeTitle}" loading="lazy" decoding="async" />`;
       }
@@ -1614,6 +1614,22 @@ const translations = {
       return;
     }
 
+    // Meta Pixel Event Tracking for Lead & Contact Form Submission
+    if (typeof window.fbq === 'function') {
+      try {
+        window.fbq('track', 'Lead', {
+          content_name: 'Contact Form Lead',
+          business_type: biz
+        });
+        window.fbq('trackCustom', 'ContactFormSubmit', {
+          business_type: biz
+        });
+        window.fbq('track', 'Contact', {
+          content_name: 'Form WhatsApp Redirect'
+        });
+      } catch (err) {}
+    }
+
     let text = `📩 طلب جديد من الموقع / New Inquiry:
 👤 الاسم / Name: ${name}
 📞 الهاتف / Phone: ${phone}
@@ -1752,5 +1768,40 @@ const translations = {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
+
+  /* ============================================
+     META PIXEL CLICK TRACKING
+     ============================================ */
+  document.addEventListener('click', (e) => {
+    if (typeof window.fbq !== 'function') return;
+
+    // Track WhatsApp link clicks
+    const waBtn = e.target.closest('a[href*="wa.me"], .social-btn.whatsapp');
+    if (waBtn) {
+      try {
+        window.fbq('track', 'Contact', {
+          content_name: 'WhatsApp Button Click',
+          link_url: waBtn.href || 'WhatsApp'
+        });
+        window.fbq('trackCustom', 'WhatsAppClick', {
+          location: waBtn.getAttribute('data-i18n') || 'WhatsApp Link'
+        });
+      } catch (err) {}
+    }
+
+    // Track "اطلب الخدمة" / Service Request / CTA Buttons
+    const srvBtn = e.target.closest('.service-link, [data-i18n="hero-btn-start"], [data-i18n="btn-consult"], [data-i18n="pkg-btn"], [data-i18n="srv-more"]');
+    if (srvBtn) {
+      try {
+        const btnText = srvBtn.textContent.trim();
+        window.fbq('track', 'Lead', {
+          content_name: btnText || 'Service Request Click'
+        });
+        window.fbq('trackCustom', 'RequestService', {
+          button_text: btnText
+        });
+      } catch (err) {}
+    }
+  }, { passive: true });
 
 })();

@@ -47,6 +47,8 @@ const translations = {
     "srv-pkg-desc": "تصميم عبوات وكراتين وبوكسات لمنتجاتك، بشكل عملي وجذاب يخلي منتجك ياخد عينه أول ما يتحط على الرف أو يتصور.",
     "srv-edit-title": "المونتاج",
     "srv-edit-desc": "مونتاج احترافي للريلز والفيديوهات القصيرة، بمؤثرات بصرية وموشن جرافيك ونصوص متحركة، لمحتوى يوقف السكرول.",
+    "srv-web-title": "إنشاء المواقع وحجز الدومين",
+    "srv-web-desc": "تصميم وبرمجة مواقع إلكترونية متكاملة وتطبيقات ويب عصرية، مع خدمة حجز الدومين والاستضافة لضمان انطلاقة قوية لمشروعك.",
 
     // Mascot Section
     "mascot-badge": "تميمتنا الرسمية",
@@ -279,7 +281,7 @@ const translations = {
     "card-phone-title": "اتصل بنا",
     "card-email-title": "راسلنا",
     "card-map-title": "موقعنا",
-    "card-map-desc": "شارع المعتمدية بعد نزله دائري الكهرباء - أرض اللواء - الجيزة - مصر",
+    "card-map-desc": "بنقدم خدماتنا دلوقتي أون لاين .. وهنكون متواجدين في مقرناً قريب جداً",
     "social-whatsapp": "واتساب",
     "social-facebook": "فيسبوك",
     "social-instagram": "انستغرام",
@@ -343,6 +345,8 @@ const translations = {
     "srv-pkg-desc": "Practical and attractive packaging, box, and carton designs that make your product stand out as soon as it is placed on the shelf or photographed.",
     "srv-edit-title": "Video Editing",
     "srv-edit-desc": "Professional video editing for Reels and short videos, with visual effects, motion graphics, and animated text, to create scroll-stopping content.",
+    "srv-web-title": "Website Creation & Domain Registration",
+    "srv-web-desc": "Professional website design and development, along with domain registration and hosting services to ensure a powerful online start for your business.",
 
     // Mascot Section
     "mascot-badge": "Official Mascot",
@@ -553,7 +557,7 @@ const translations = {
     "card-phone-title": "Call Us",
     "card-email-title": "Email Us",
     "card-map-title": "Our Location",
-    "card-map-desc": "Al Moatamedeya St, after Electric Ring Road exit - Ard El Lewa - Giza - Egypt",
+    "card-map-desc": "We are currently offering our services online, and will be available at our physical headquarters soon! 🚀",
     "social-whatsapp": "WhatsApp",
     "social-facebook": "Facebook",
     "social-instagram": "Instagram",
@@ -1219,11 +1223,6 @@ const translations = {
     lightboxCat.textContent = content.cat;
     lightboxTitle.textContent = content.title;
 
-    // Meta Pixel Tracking: Portfolio View (ViewContent) & Project Details (ProjectViewed)
-    if (window.ForsaPixel) {
-      window.ForsaPixel.trackPortfolioView(item, content);
-    }
-
     activeMedia = [];
     if (item.media && Array.isArray(item.media) && item.media.length > 0) {
       activeMedia = item.media;
@@ -1515,9 +1514,6 @@ const translations = {
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const filter = btn.dataset.filter;
-      if (window.ForsaPixel) {
-        window.ForsaPixel.trackCategoryView(filter, btn.textContent.trim());
-      }
       document.querySelectorAll('.portfolio-item').forEach(item => {
         const match = filter === 'all' || item.dataset.cat === filter;
         item.classList.toggle('hide', !match);
@@ -1620,11 +1616,6 @@ const translations = {
     if(!name || !phone){
       alert(document.body.getAttribute('lang') === 'en' ? "Please fill in the required fields (Name & Phone)" : "من فضلك املأ البيانات الأساسية (الاسم والهاتف)");
       return;
-    }
-
-    // Meta Pixel Event Tracking for Lead & Contact Form Submission
-    if (window.ForsaPixel) {
-      window.ForsaPixel.trackContactFormSubmit(biz);
     }
 
     let text = `📩 طلب جديد من الموقع / New Inquiry:
@@ -1765,269 +1756,5 @@ const translations = {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
-
-  /* ============================================
-     META PIXEL ADVANCED RETARGETING & TRACKING SYSTEM
-     ============================================ */
-  const ForsaPixel = {
-    // Helper to generate unique Event ID for Conversions API (CAPI) Deduplication
-    generateEventId: function() {
-      if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
-        return crypto.randomUUID();
-      }
-      return 'evt_' + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
-    },
-
-    // Safe tracker helper to prevent duplicate/broken execution + CAPI deduplication support
-    track: function(eventName, params = {}, isCustom = false) {
-      if (typeof window.fbq !== 'function') return;
-      try {
-        const eventId = this.generateEventId();
-        const options = { eventID: eventId };
-
-        if (isCustom) {
-          window.fbq('trackCustom', eventName, params, options);
-        } else {
-          window.fbq('track', eventName, params, options);
-        }
-      } catch (err) {}
-    },
-
-    // 2. Portfolio View (ViewContent) & 4. Project Details (ProjectViewed)
-    trackPortfolioView: function(item, content) {
-      const title = content ? content.title : 'Project';
-      const catName = content ? content.cat : (item.category || 'Portfolio');
-      const projId = 'proj_' + (item.category || 'item') + '_' + title.replace(/[^a-zA-Z0-9\u0600-\u06FF]/g, '_');
-
-      // Standard ViewContent
-      this.track('ViewContent', {
-        content_type: 'portfolio',
-        content_name: title,
-        content_category: catName,
-        content_id: projId
-      });
-
-      // Custom ProjectViewed with rich parameters for retargeting & custom audiences
-      this.track('ProjectViewed', {
-        project_name: title,
-        project_category: catName,
-        category: catName,
-        project_id: projId
-      }, true);
-    },
-
-    // 1. PortfolioCategoryView (Social Media, Visual Identity, Printing, Video Editing, Ads, Graphic Design)
-    trackCategoryView: function(filterKey, buttonLabel) {
-      const categoryMap = {
-        'all': 'All Projects',
-        'social': 'Social Media',
-        'design': 'Visual Identity & Graphic Design',
-        'print': 'Printing',
-        'ads': 'Advertising Campaigns',
-        'videos': 'Video Editing'
-      };
-      const catName = categoryMap[filterKey] || buttonLabel || filterKey;
-      this.track('PortfolioCategoryView', { category: catName }, true);
-    },
-
-    // Contact Form Lead Submission
-    trackContactFormSubmit: function(bizType) {
-      this.track('Lead', {
-        content_name: 'Contact Form Lead',
-        business_type: bizType
-      });
-      this.track('ContactFormSubmit', {
-        business_type: bizType,
-        name_provided: true
-      }, true);
-    },
-
-    // Auto Tracking Setup (Viewports, Scroll, Time, Outbound Clicks, Downloads)
-    initAutoTracking: function() {
-      const self = this;
-
-      // 3. ServiceViewed (IntersectionObserver when a service card enters Viewport)
-      const trackedServices = new Set();
-      const serviceCards = document.querySelectorAll('.service-card');
-      if (serviceCards.length > 0 && 'IntersectionObserver' in window) {
-        const srvObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const h3 = entry.target.querySelector('h3');
-              const srvTitle = h3 ? h3.textContent.trim() : 'Service';
-              if (!trackedServices.has(srvTitle)) {
-                trackedServices.add(srvTitle);
-                self.track('ServiceViewed', { service: srvTitle }, true);
-              }
-            }
-          });
-        }, { threshold: 0.5 });
-        serviceCards.forEach(card => srvObserver.observe(card));
-      }
-
-      // 4. PricingViewed (IntersectionObserver when Packages/Pricing section enters Viewport)
-      let pricingTracked = false;
-      const pkgSection = document.getElementById('packages') || document.querySelector('.packages');
-      if (pkgSection && 'IntersectionObserver' in window) {
-        const pkgObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting && !pricingTracked) {
-              pricingTracked = true;
-              self.track('PricingViewed', { section: 'Packages & Pricing' }, true);
-            }
-          });
-        }, { threshold: 0.3 });
-        pkgObserver.observe(pkgSection);
-      }
-
-      // 5. CTAViewed (IntersectionObserver when first CTA button enters Viewport)
-      let ctaTracked = false;
-      const firstCTA = document.querySelector('.hero-ctas .btn-primary, #hero .btn-primary, .service-link');
-      if (firstCTA && 'IntersectionObserver' in window) {
-        const ctaObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting && !ctaTracked) {
-              ctaTracked = true;
-              const btnText = firstCTA.textContent.trim();
-              self.track('CTAViewed', { cta_name: btnText || 'First CTA Button' }, true);
-            }
-          });
-        }, { threshold: 0.5 });
-        ctaObserver.observe(firstCTA);
-      }
-
-      // Scroll Depth Tracking (25%, 50%, 75%, 100%) — Fired once per threshold per session
-      const firedDepths = new Set();
-      const checkScrollDepth = () => {
-        const winHeight = window.innerHeight;
-        const docHeight = document.documentElement.scrollHeight - winHeight;
-        if (docHeight <= 0) return;
-        const scrollPct = Math.round((window.scrollY / docHeight) * 100);
-
-        const thresholds = [25, 50, 75, 100];
-        thresholds.forEach(t => {
-          if (scrollPct >= t && !firedDepths.has(t)) {
-            firedDepths.add(t);
-            self.track('ScrollDepth', { depth: t + '%' }, true);
-          }
-        });
-      };
-
-      let scrollDebounce;
-      window.addEventListener('scroll', () => {
-        if (!scrollDebounce) {
-          scrollDebounce = setTimeout(() => {
-            scrollDebounce = null;
-            checkScrollDepth();
-          }, 250);
-        }
-      }, { passive: true });
-
-      // 6. Session Duration (Time On Page: 30s, 60s, 120s, 180s [3 min], 300s [5 min]) — Fired once per threshold
-      const timeThresholds = [30, 60, 120, 180, 300];
-      timeThresholds.forEach(sec => {
-        setTimeout(() => {
-          self.track('TimeOnPage', { seconds: sec }, true);
-        }, sec * 1000);
-      });
-
-      // Unified Event Delegation (Outbound Clicks, Social Clicks, Phone, Email, Request Service, Downloads)
-      document.addEventListener('click', (e) => {
-        // WhatsApp Click
-        const waLink = e.target.closest('a[href*="wa.me"], .social-btn.whatsapp');
-        if (waLink) {
-          const loc = waLink.closest('header') ? 'header' :
-                      waLink.closest('footer') ? 'footer' :
-                      waLink.closest('.contact') ? 'contact_section' : 'button';
-          self.track('OutboundLinkClick', { destination: 'WhatsApp', location: loc }, true);
-          self.track('Contact', { content_name: 'WhatsApp Click', location: loc });
-          self.track('WhatsAppClick', { location: loc }, true);
-          return;
-        }
-
-        // Facebook Click
-        const fbLink = e.target.closest('a[href*="facebook.com"], .social-btn.facebook');
-        if (fbLink) {
-          const loc = fbLink.closest('footer') ? 'footer' : 'contact_section';
-          self.track('OutboundLinkClick', { destination: 'Facebook', location: loc }, true);
-          self.track('FacebookClick', { location: loc }, true);
-          return;
-        }
-
-        // Instagram Click
-        const igLink = e.target.closest('a[href*="instagram.com"], .social-btn.instagram');
-        if (igLink) {
-          const loc = igLink.closest('footer') ? 'footer' : 'contact_section';
-          self.track('OutboundLinkClick', { destination: 'Instagram', location: loc }, true);
-          self.track('InstagramClick', { location: loc }, true);
-          return;
-        }
-
-        // LinkedIn Click
-        const liLink = e.target.closest('a[href*="linkedin.com"], .social-btn.linkedin');
-        if (liLink) {
-          const loc = liLink.closest('footer') ? 'footer' : 'contact_section';
-          self.track('OutboundLinkClick', { destination: 'LinkedIn', location: loc }, true);
-          self.track('LinkedInClick', { location: loc }, true);
-          return;
-        }
-
-        // Behance Click
-        const beLink = e.target.closest('a[href*="behance.net"], .social-btn.behance');
-        if (beLink) {
-          const loc = beLink.closest('footer') ? 'footer' : 'contact_section';
-          self.track('OutboundLinkClick', { destination: 'Behance', location: loc }, true);
-          self.track('BehanceClick', { location: loc }, true);
-          return;
-        }
-
-        // TikTok Click
-        const ttLink = e.target.closest('a[href*="tiktok.com"], .social-btn.tiktok');
-        if (ttLink) {
-          const loc = ttLink.closest('footer') ? 'footer' : 'contact_section';
-          self.track('OutboundLinkClick', { destination: 'TikTok', location: loc }, true);
-          self.track('TikTokClick', { location: loc }, true);
-          return;
-        }
-
-        // Phone Call Click
-        const phoneCard = e.target.closest('.contact-card');
-        const phoneLink = e.target.closest('a[href^="tel:"]') || (phoneCard && phoneCard.textContent.includes('201101742867'));
-        if (phoneLink) {
-          self.track('OutboundLinkClick', { destination: 'Phone', location: 'contact_section' }, true);
-          self.track('PhoneCallClick', { phone_number: '+201101742867' }, true);
-          return;
-        }
-
-        // Email Click
-        const mailLink = e.target.closest('a[href^="mailto:"]');
-        if (mailLink) {
-          self.track('OutboundLinkClick', { destination: 'Email', location: 'contact_section' }, true);
-          self.track('EmailClick', { email_address: 'info@forsa-media.com' }, true);
-          return;
-        }
-
-        // Request Service Click
-        const srvBtn = e.target.closest('.service-link, [data-i18n="hero-btn-start"], [data-i18n="btn-consult"], [data-i18n="pkg-btn"], [data-i18n="srv-more"]');
-        if (srvBtn) {
-          const btnText = srvBtn.textContent.trim();
-          self.track('Lead', { content_name: btnText || 'Request Service' });
-          self.track('RequestService', { button_text: btnText }, true);
-          return;
-        }
-
-        // File Downloads Tracking (.pdf, .zip, .doc, .docx, or download attr)
-        const dlLink = e.target.closest('a[href$=".pdf"], a[href$=".zip"], a[href$=".doc"], a[href$=".docx"], a[download]');
-        if (dlLink) {
-          const href = dlLink.href || '';
-          const name = dlLink.download || href.split('/').pop() || 'File';
-          self.track('FileDownload', { file_name: name, file_url: href }, true);
-        }
-      }, { passive: true });
-    }
-  };
-
-  window.ForsaPixel = ForsaPixel;
-  ForsaPixel.initAutoTracking();
 
 })();

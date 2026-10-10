@@ -22,23 +22,6 @@
   src="https://cdn.jsdelivr.net/npm/@iconify/iconify@3.1.1/dist/iconify.min.js"
   integrity="sha384-Ok2uDHnWhbSMsjjXrs20mYHBe3BLztRYQuPMBhyLnjPNH7OqWdv/c8Bmv54yhfKR"
   crossorigin="anonymous"></script>
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '27897311916565892');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=27897311916565892&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -136,7 +119,7 @@ src="https://www.facebook.com/tr?id=27897311916565892&ev=PageView&noscript=1"
             <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor" width="22" height="22" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
           </button>
         </div>
-        <audio id="heroAudio" src="intro.mp3" preload="auto"></audio>
+        <audio id="heroAudio" src="intro.wav" preload="auto"></audio>
       </div>
       <span class="eyebrow" data-i18n="hero-badge">فرصة ميديا</span>
       <h1 class="hero-title"><span data-i18n="hero-title-1">نحو</span> <span class="accent" data-i18n="hero-accent">فرصة ..</span> <span data-i18n="hero-title-2">تصنع الفرق</span></h1>
@@ -256,6 +239,20 @@ src="https://www.facebook.com/tr?id=27897311916565892&ev=PageView&noscript=1"
         <h3 data-i18n="srv-edit-title">المونتاج</h3>
         <p data-i18n="srv-edit-desc">مونتاج احترافي للريلز والفيديوهات القصيرة مع إضافة المؤثرات البصرية، النصوص المتحركة، وتحسين الألوان لإنتاج محتوى يجذب الانتباه ويزيد من التفاعل.</p>
         <a href="#contact" class="service-link"><span data-i18n="srv-more">تفاصيل الخدمة</span> <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+      </div>
+      <div class="service-card full-width reveal" style="--i:6">
+        <div class="service-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+        </div>
+        <div class="service-content">
+          <h3 data-i18n="srv-web-title">إنشاء المواقع وحجز الدومين</h3>
+          <p data-i18n="srv-web-desc">تصميم وبرمجة مواقع إلكترونية متكاملة وتطبيقات ويب عصرية، مع خدمة حجز الدومين والاستضافة لضمان انطلاقة قوية لمشروعك.</p>
+        </div>
+        <a href="#contact" class="service-link"><span data-i18n="srv-more">اطلب الخدمة</span> <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
       </div>
     </div>
   </div>
@@ -551,7 +548,6 @@ src="https://www.facebook.com/tr?id=27897311916565892&ev=PageView&noscript=1"
     <div class="packages-grid reveal-stagger">
       <div class="plan-card reveal" style="--i:0">
         <div class="plan-name" data-i18n="pkg-basic">الباقة الأساسية</div>
-        <div class="plan-price"><span class="amount">1499</span><span class="period" data-i18n="pkg-price-period"> ج.م/ شهرياً</span></div>
         <p class="plan-desc" data-i18n="pkg-basic-desc">مناسبة للمشاريع الناشئة التي تبدأ حضورها الرقمي.</p>
         <div class="plan-features">
           <div class="plan-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="pkg-feat-basic-1">12 تصميم سوشيال ميديا احترافي.</span></div>
@@ -568,7 +564,6 @@ src="https://www.facebook.com/tr?id=27897311916565892&ev=PageView&noscript=1"
       <div class="plan-card featured reveal" style="--i:1">
         <span class="plan-badge" data-i18n="pkg-badge-popular">الأكثر طلباً</span>
         <div class="plan-name" data-i18n="pkg-advanced">الباقة المتقدمة</div>
-        <div class="plan-price"><span class="amount">2999</span><span class="period" data-i18n="pkg-price-period">ج.م / شهرياً</span></div>
         <p class="plan-desc" data-i18n="pkg-adv-desc">للشركات التي تريد نمواً ثابتاً وحضوراً قوياً.</p>
         <div class="plan-features">
           <div class="plan-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="pkg-feat-adv-1">20 تصميم سوشيال ميديا.</span></div>
@@ -585,7 +580,6 @@ src="https://www.facebook.com/tr?id=27897311916565892&ev=PageView&noscript=1"
       </div>
       <div class="plan-card reveal" style="--i:2">
         <div class="plan-name" data-i18n="pkg-pro">الباقة الاحترافية</div>
-        <div class="plan-price"><span class="amount">5499</span><span class="period" data-i18n="pkg-price-period">ج.م / شهرياً</span></div>
         <p class="plan-desc" data-i18n="pkg-pro-desc">حلول متكاملة للشركات الكبيرة وعلامات التوسع.</p>
         <div class="plan-features">
           <div class="plan-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="pkg-feat-pro-1">30 تصميم سوشيال ميديا. (ضمن سياسة الاستخدام العادل).</span></div>
@@ -747,7 +741,7 @@ src="https://www.facebook.com/tr?id=27897311916565892&ev=PageView&noscript=1"
   <div class="ic" aria-hidden="true"><svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
   <div class="txt">
     <strong data-i18n="card-map-title">موقعنا</strong>
-    <span data-i18n="card-map-desc">شارع المعتمدية بعد نزله دائري الكهرباء - أرض اللواء - الجيزة - مصر</span>
+    <span data-i18n="card-map-desc">بنقدم خدماتنا دلوقتي أون لاين .. وهنكون متواجدين في مقرناً قريب جداً</span>
   </div>
 </a>
 
@@ -820,6 +814,7 @@ src="https://www.facebook.com/tr?id=27897311916565892&ev=PageView&noscript=1"
           <li><a href="#services" data-i18n="srv-print-title">الطباعة والدعاية</a></li>
           <li><a href="#services" data-i18n="srv-pkg-title">تصميم العبوات والمنتجات</a></li>
           <li><a href="#services" data-i18n="srv-edit-title">المونتاج</a></li>
+          <li><a href="#services" data-i18n="srv-web-title">إنشاء المواقع وحجز الدومين</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -865,8 +860,8 @@ src="https://www.facebook.com/tr?id=27897311916565892&ev=PageView&noscript=1"
   </svg>
 </button>
 
-<script src="portfolio-data.js?v=2.4"></script>
-<script src="main.js?v=2.4"></script>
+<script src="portfolio-data.js?v=2.0"></script>
+<script src="main.js?v=2.0"></script>
 </body>
 </html>
 
